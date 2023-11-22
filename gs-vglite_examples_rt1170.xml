@@ -1,0 +1,24 @@
+<data:item xmlns:data="data" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="data ../../xsd/alp.xsd" id="gs-vglite_examples_rt1170" type="general_sw" format="projectfile" name="vglite_examples_rt1170">
+    <display_title>
+        VGLite examples
+    </display_title>
+    <overview>
+        <![CDATA[The VGLite examples show how to draw graphics assets using VGLite API.]]>
+    </overview>
+    <toolchains>
+        <toolchain name="mcux"></toolchain>
+    </toolchains>
+    <families>
+        <family name="imxrt"></family>
+    </families>
+    <nxp_compatible_hw>
+        <hw id="MIMXRT1170-EVK"></hw>
+        <hw id="MIMXRT1170-EVKB"></hw>
+    </nxp_compatible_hw>
+    <peripherals>
+        <peripheral name="display"></peripheral>
+    </peripherals>
+    <categories>
+        <category name="graphics"></category>
+    </categories>
+</data:item>

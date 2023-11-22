@@ -1,0 +1,90 @@
+NXP Software Content Register
+
+Package:                   VGLite examples
+
+Version:                   1.0
+Outgoing License:          LA_OPT_NXP_Software_License v49 September 2023- Additional Distribution License granted, license in Section 2.3 applies
+License File:              LICENSE
+Description and comments:  These examples code are to demostrate how to program with VGLite API on i.MX RT.
+Release Location:          https://github.com/nxp-appcodehub/gs-vglite_examples_rt1170
+
+Origin:                    NXP (LA_OPT_NXP_Software_License)
+                           NXP (BSD-3-Clause)
+                           CMSIS (Apache-2.0) - https://github.com/ARM-software/CMSIS_5/releases/tag/5.6.0 
+                           freertos_kernel (MIT) - https://aws.amazon.com/freertos
+                           VeriSilicon (http://www.verisilicon.com/)
+                           3Dicons (CC0) https://3dicons.co/
+
+--------------------------------------------------------------------------------
+                 
+cmsis                      Name: CMSIS                                       
+                           Version: 5.8.0                                    
+                           Outgoing License: Apache License 2.0              
+                           License File: common/CMSIS/LICENSE.txt                   
+                           Format: source code                               
+                           Description: Vendor-independent hardware          
+                           abstraction layer for microcontrollers that are   
+                           based on Arm Cortex processors, distributed by    
+                           ARM. cores                                        
+                           Location: common/CMSIS/                                  
+                           Origin: ARM (Apache-2.0) -                        
+                           https://github.com/ARM-software/CMSIS_5/releases/t
+                           ag/5.8.0                                           
+
+freertos_kernel            Name: FreeRTOS                                    
+                           Version: 10.4.3_rev1                              
+                           Outgoing License: MIT                             
+                           License File:                                     
+                           common/freertos/freertos_kernel/LICENSE.md          
+                           Format: source code                               
+                           Description: Open source RTOS kernel for small    
+                           devices                                           
+                           Location: common/freertos/freertos_kernel           
+                           Origin: Amazon (MIT)                              
+                           Url: https://aws.amazon.com/freertos/             
+
+vglite                     Name: vglite                                      
+                           Version: 3.0.13_rev2                              
+                           Outgoing License: MIT                             
+                           License File: common/vglite/LICENSE.txt       
+                           Format: source code                               
+                           Description: VeriSilicon's platform independent   
+                           VGLite Graphics library                           
+                           Location: common/vglite                       
+                           Origin: VeriSilicon (http://www.verisilicon.com/) 
+                           Url: http://www.verisilicon.com/  
+                           
+                           
+elementary                 Name: elementary                                  
+                           Version: 3.0.13_rev2                              
+                           Outgoing License: MIT                             
+                           License File: common/vglite/LICENSE.txt        
+                           Format: source code                               
+                           Description: VeriSilicon's platform independent   
+                           VGLite Graphics library                           
+                           Location: common/elementary                       
+                           Origin: VeriSilicon (http://www.verisilicon.com/) 
+                           Url: http://www.verisilicon.com/                              
+
+mcufont                    Name: mcufont                                     
+                           Version: 1.0                                      
+                           Outgoing License: MIT                             
+                           License File:                                     
+                           common/vglite/font/mcufont/LICENSE            
+                           Format: source code                               
+                           Description: Font rendering library for           
+                           microcontrollers                                  
+                           Location: middleware/vglite/font/mcufont          
+                           Origin: Petteri Aimonen                           
+                           (https://github.com/PetteriAimonen)               
+                           Url: https://github.com/mcufont/mcufont
+						   
+Image data files           Name: 3Dicons                                                                          
+                           Outgoing License: CC0              
+                           License File: http://creativecommons.org/publicdomain/zero/1.0/                  
+                           Format: image binary                               
+                           Description: Original images are from https://3dicons.co/ that 
+                           are 100% FREE FOR COMMERCIAL AND PERSONAL USE UNDER CC0. NXP 
+                           converted them into data arrays used in .c files.                           
+                           Origin: 3Dicons (CC0) - https://3dicons.co
+                           Url: https://3dicons.co					   
