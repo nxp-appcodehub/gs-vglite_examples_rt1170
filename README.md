@@ -58,8 +58,8 @@ There are  20 examples provided for your reference:
 
 ## 2. Hardware<a name="step2"></a>
 
-- MIMXRT1170-EVK (all Rev boards are supported)
-- RK055HDMIPI4M or RK055HDMIPI4MA0 MIPI display panel
+- [MIMXRT1170-EVK](https://www.nxp.com/design/development-boards/i-mx-evaluation-and-development-boards/i-mx-rt1170-evaluation-kit:MIMXRT1170-EVK) (all Rev boards are supported)
+- RK055HDMIPI4M or [RK055HDMIPI4MA0](https://www.nxp.com/part/RK055HDMIPI4MA0) MIPI display panel
 - Micro USB Cable
 - Personal computer
 
