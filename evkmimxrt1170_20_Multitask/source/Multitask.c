@@ -87,7 +87,7 @@ static int scaleCount = 0;
 static vg_lite_matrix_t matrix;
 static vg_lite_matrix_t matrix2;
 static vg_lite_matrix_t mat;
-static int index = 0;
+static int buf_index = 0;
 /*******************************************************************************
  * Code
  ******************************************************************************/
@@ -241,7 +241,7 @@ static void redraw()
         }
     }
 
-    vg_lite_blit(rt, &tmp_buf[(index+2) % 3], &mat,VG_LITE_BLEND_NONE, 0, VG_LITE_FILTER_POINT);
+    vg_lite_blit(rt, &tmp_buf[(buf_index+2) % 3], &mat,VG_LITE_BLEND_NONE, 0, VG_LITE_FILTER_POINT);
 
     VGLITE_SwapBuffers(&window);
 
@@ -333,12 +333,12 @@ static void vglite_task2(void *pvParameters)
     
     while (1)
     {
-        index = index % 3;
+        buf_index = buf_index % 3;
         // Draw the path using the matrix.
-        vg_lite_clear(&tmp_buf[index], NULL, 0xFFFF0000);
+        vg_lite_clear(&tmp_buf[buf_index], NULL, 0xFFFF0000);
         for (count = 0; count < pathCount; count++)
         {
-            error = vg_lite_draw(&tmp_buf[index], &path[count], VG_LITE_FILL_EVEN_ODD, &matrix2, VG_LITE_BLEND_NONE, color_data[count]);
+            error = vg_lite_draw(&tmp_buf[buf_index], &path[count], VG_LITE_FILL_EVEN_ODD, &matrix2, VG_LITE_BLEND_NONE, color_data[count]);
             if (error)
             {
                 PRINTF("vg_lite_draw() returned error %d\r\n", error);
@@ -346,7 +346,7 @@ static void vglite_task2(void *pvParameters)
                 return;
             }
         }
-        index++; 
+        buf_index++;
 
         vg_lite_rotate(0.5, &matrix2);
       
