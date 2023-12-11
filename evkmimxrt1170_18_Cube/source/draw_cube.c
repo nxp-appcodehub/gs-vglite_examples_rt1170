@@ -27,7 +27,7 @@
 #define TEXTURE_IMAGE_WIDTH          256
 #define TEXTURE_IMAGE_HEIGHT         236
 #define TEXTURE_IMAGE_BYTE_PER_PIXEL 4
-#define TEXTURE_IMAGE_STRIE (TEXTURE_IMAGE_WIDTH*TEXTURE_IMAGE_BYTE_PER_PIXEL)
+#define TEXTURE_IMAGE_STRIDE (TEXTURE_IMAGE_WIDTH*TEXTURE_IMAGE_BYTE_PER_PIXEL)
 #define TEXTURE_IMAGE_BUFFER_SIZE (TEXTURE_IMAGE_WIDTH*TEXTURE_IMAGE_HEIGHT)
 
 typedef struct VertexRec
@@ -131,7 +131,7 @@ void compute_rotate(float rx, float ry, float rz, vg_lite_matrix_t *rotate)
     rotate->m[2][2] = ry_cos * rx_cos;
 }
 
-void transfrom_rotate(vg_lite_matrix_t *rotate, vertex_t *vertex, vertex_t *rc, float tx, float ty)
+void transform_rotate(vg_lite_matrix_t *rotate, vertex_t *vertex, vertex_t *rc, float tx, float ty)
 {
     /* Compute the new cube vertex coordinates transformed by the rotation matrix */
     rc->x = rotate->m[0][0] * vertex->x + rotate->m[0][1] * vertex->y + rotate->m[0][2] * vertex->z;
@@ -143,7 +143,7 @@ void transfrom_rotate(vg_lite_matrix_t *rotate, vertex_t *vertex, vertex_t *rc, 
     rc->y += ty;
 }
 
-void transfrom_normalZ(vg_lite_matrix_t *rotate, normal_t *nVec, float *nZ)
+void transform_normalZ(vg_lite_matrix_t *rotate, normal_t *nVec, float *nZ)
 {
     /* Compute the new normal Z coordinate transformed by the rotation matrix */
     *nZ = rotate->m[2][0] * nVec->x + rotate->m[2][1] * nVec->y + rotate->m[2][2] * nVec->z;
@@ -161,7 +161,7 @@ void transfrom_normalZ(vg_lite_matrix_t *rotate, normal_t *nVec, float *nZ)
      x3 = h*shx + tx;
      y3 = h*sy + ty;
 */
-void transfrom_blit(float w, float h, vertex_t *v0, vertex_t *v1, vertex_t *v2, vertex_t *v3, vg_lite_matrix_t *matrix)
+void transform_blit(float w, float h, vertex_t *v0, vertex_t *v1, vertex_t *v2, vertex_t *v3, vg_lite_matrix_t *matrix)
 {
     float sx, sy, shx, shy, tx, ty;
 
@@ -196,7 +196,7 @@ static int vg_lite_set_image(vg_lite_buffer_t *buffer, uint8_t *img_array)
 	/* Get width, height, stride and format info */
 	buffer->width = TEXTURE_IMAGE_WIDTH;
 	buffer->height = TEXTURE_IMAGE_HEIGHT;
-	buffer->stride = TEXTURE_IMAGE_STRIE;
+	buffer->stride = TEXTURE_IMAGE_STRIDE;
 	buffer->format = VG_LITE_BGRA8888;
 	/* Set image data in the buffer */
 	buffer->handle = NULL;
@@ -218,7 +218,7 @@ static int vg_lite_linear_to_tiled(vg_lite_buffer_t *buffer)
     /* Get width, height, stride and format info */
     tmpbuf.width = TEXTURE_IMAGE_WIDTH;
     tmpbuf.height = TEXTURE_IMAGE_HEIGHT;
-    tmpbuf.stride = TEXTURE_IMAGE_STRIE;
+    tmpbuf.stride = TEXTURE_IMAGE_STRIDE;
     tmpbuf.format = VG_LITE_BGRA8888;
     /* Set target vglite buffer */
     tmpbuf.handle = NULL;
@@ -322,29 +322,29 @@ void draw_cube(vg_lite_buffer_t *rt)
     //zrot += rotstep;
 
     /* Compute the new cube vertex coordinates transformed by the rotation matrix */
-    transfrom_rotate(&rotate_3D, &cube_v0, &rv0, xoff, yoff);
-    transfrom_rotate(&rotate_3D, &cube_v1, &rv1, xoff, yoff);
-    transfrom_rotate(&rotate_3D, &cube_v2, &rv2, xoff, yoff);
-    transfrom_rotate(&rotate_3D, &cube_v3, &rv3, xoff, yoff);
-    transfrom_rotate(&rotate_3D, &cube_v4, &rv4, xoff, yoff);
-    transfrom_rotate(&rotate_3D, &cube_v5, &rv5, xoff, yoff);
-    transfrom_rotate(&rotate_3D, &cube_v6, &rv6, xoff, yoff);
-    transfrom_rotate(&rotate_3D, &cube_v7, &rv7, xoff, yoff);
+    transform_rotate(&rotate_3D, &cube_v0, &rv0, xoff, yoff);
+    transform_rotate(&rotate_3D, &cube_v1, &rv1, xoff, yoff);
+    transform_rotate(&rotate_3D, &cube_v2, &rv2, xoff, yoff);
+    transform_rotate(&rotate_3D, &cube_v3, &rv3, xoff, yoff);
+    transform_rotate(&rotate_3D, &cube_v4, &rv4, xoff, yoff);
+    transform_rotate(&rotate_3D, &cube_v5, &rv5, xoff, yoff);
+    transform_rotate(&rotate_3D, &cube_v6, &rv6, xoff, yoff);
+    transform_rotate(&rotate_3D, &cube_v7, &rv7, xoff, yoff);
 
     /* Compute the surface normal direction to determine the front/back face */
-    transfrom_normalZ(&rotate_3D, &normal0321, &nz0321);
-    transfrom_normalZ(&rotate_3D, &normal4567, &nz4567);
-    transfrom_normalZ(&rotate_3D, &normal1265, &nz5126);
-    transfrom_normalZ(&rotate_3D, &normal0473, &nz0473);
-    transfrom_normalZ(&rotate_3D, &normal2376, &nz7623);
-    transfrom_normalZ(&rotate_3D, &normal0154, &nz0154);
+    transform_normalZ(&rotate_3D, &normal0321, &nz0321);
+    transform_normalZ(&rotate_3D, &normal4567, &nz4567);
+    transform_normalZ(&rotate_3D, &normal1265, &nz5126);
+    transform_normalZ(&rotate_3D, &normal0473, &nz0473);
+    transform_normalZ(&rotate_3D, &normal2376, &nz7623);
+    transform_normalZ(&rotate_3D, &normal0154, &nz0154);
 
     if (nz0321 > 0.0)
     {
         /* Compute 3x3 image transform matrix to map a rectangle image (w,h) to
            a parallelogram (x0,y0), (x1,y1), (x2,y2), (x3,y3) counterclock wise.
         */
-        transfrom_blit(image0.width, image0.height, &rv0, &rv3, &rv2, &rv1, &matrix);
+        transform_blit(image0.width, image0.height, &rv0, &rv3, &rv2, &rv1, &matrix);
 
         /* Blit the image using the matrix */
         vg_lite_blit(rt, &image0, &matrix, VG_LITE_BLEND_SCREEN, 0, filter);
@@ -355,7 +355,7 @@ void draw_cube(vg_lite_buffer_t *rt)
         /* Compute 3x3 image transform matrix to map a rectangle image (w,h) to
            a parallelogram (x0,y0), (x1,y1), (x2,y2), (x3,y3) counterclock wise.
         */
-        transfrom_blit(image1.width, image1.height, &rv4, &rv5, &rv6, &rv7, &matrix);
+        transform_blit(image1.width, image1.height, &rv4, &rv5, &rv6, &rv7, &matrix);
 
         /* Blit the image using the matrix */
         vg_lite_blit(rt, &image1, &matrix, VG_LITE_BLEND_SCREEN, 0, filter);
@@ -366,7 +366,7 @@ void draw_cube(vg_lite_buffer_t *rt)
         /* Compute 3x3 image transform matrix to map a rectangle image (w,h) to
            a parallelogram (x0,y0), (x1,y1), (x2,y2), (x3,y3) counterclock wise.
         */
-        transfrom_blit(image2.width, image2.height, &rv5, &rv1, &rv2, &rv6, &matrix);
+        transform_blit(image2.width, image2.height, &rv5, &rv1, &rv2, &rv6, &matrix);
 
         /* Blit the image using the matrix */
         vg_lite_blit(rt, &image2, &matrix, VG_LITE_BLEND_SCREEN, 0, filter);
@@ -377,7 +377,7 @@ void draw_cube(vg_lite_buffer_t *rt)
         /* Compute 3x3 image transform matrix to map a rectangle image (w,h) to
            a parallelogram (x0,y0), (x1,y1), (x2,y2), (x3,y3) counterclock wise.
         */
-        transfrom_blit(image3.width, image3.height, &rv0, &rv4, &rv7, &rv3, &matrix);
+        transform_blit(image3.width, image3.height, &rv0, &rv4, &rv7, &rv3, &matrix);
 
         /* Blit the image using the matrix */
         vg_lite_blit(rt, &image3, &matrix, VG_LITE_BLEND_SCREEN, 0, filter);
@@ -388,7 +388,7 @@ void draw_cube(vg_lite_buffer_t *rt)
         /* Compute 3x3 image transform matrix to map a rectangle image (w,h) to
            a parallelogram (x0,y0), (x1,y1), (x2,y2), (x3,y3) counterclock wise.
         */
-        transfrom_blit(image4.width, image4.height, &rv7, &rv6, &rv2, &rv3, &matrix);
+        transform_blit(image4.width, image4.height, &rv7, &rv6, &rv2, &rv3, &matrix);
 
         /* Blit the image using the matrix */
         vg_lite_blit(rt, &image4, &matrix, VG_LITE_BLEND_SCREEN, 0, filter);
@@ -399,7 +399,7 @@ void draw_cube(vg_lite_buffer_t *rt)
         /* Compute 3x3 image transform matrix to map a rectangle image (w,h) to
            a parallelogram (x0,y0), (x1,y1), (x2,y2), (x3,y3) counterclock wise.
         */
-        transfrom_blit(image5.width, image5.height, &rv0, &rv1, &rv5, &rv4, &matrix);
+        transform_blit(image5.width, image5.height, &rv0, &rv1, &rv5, &rv4, &matrix);
 
         /* Blit the image using the matrix */
         vg_lite_blit(rt, &image5, &matrix, VG_LITE_BLEND_SCREEN, 0, filter);
