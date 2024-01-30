@@ -15,6 +15,9 @@
         <hw id="MIMXRT1170-EVK"></hw>
         <hw id="MIMXRT1170-EVKB"></hw>
     </nxp_compatible_hw>
+    <nxp_ebh_hw>
+        <ebh id="nxp_rk055hdmipi4ma0"></ebh>
+    </nxp_ebh_hw>
     <peripherals>
         <peripheral name="display"></peripheral>
     </peripherals>
